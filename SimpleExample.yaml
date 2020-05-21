@@ -1,0 +1,27 @@
+Resources:
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0d6621c01e8c2de2c # Amazon Linux AMI in N.Virginia
+      KeyName: us-west-2key-pair
+      Tags:
+        - Key: Name
+          Value: !Join ["-", [Sample, EC2, Instance] ]
+      SecurityGroupIds:
+        - !Ref MySecurityGroup
+
+  MySecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 25
+          ToPort: 25
+          CidrIp: 0.0.0.0/0          
+
